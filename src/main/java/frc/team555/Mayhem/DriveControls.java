@@ -6,7 +6,11 @@ import org.montclairrobotics.cyborg.devices.CBDeviceID;
 
 public class DriveControls {
 
-    private final int driveStickID = 0;
+    // joystick port
+    public final int driveStickID = 0;
+
+    // button IDs
+    public final int gyroLockButtonID = 1;
 
     CBDeviceID xAxis, yAxis;
     CBHardwareAdapter hardwareAdapter;
