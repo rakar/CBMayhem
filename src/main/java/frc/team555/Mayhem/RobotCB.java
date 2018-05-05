@@ -17,6 +17,7 @@ public class RobotCB extends Cyborg {
 
     private CBDeviceID
 
+
         // dt Motors
         dtFrontLeftMotor,
         dtFrontRightMotor,
@@ -34,25 +35,26 @@ public class RobotCB extends Cyborg {
         Cyborg.hardwareAdapter = new CBHardwareAdapter(this).setJoystickCount(3);
         CBHardwareAdapter hardwareAdapter = Cyborg.hardwareAdapter;
 
-        // setup dt Motors //TODO: Fix assignments
-        dtFrontLeftMotor  = hardwareAdapter.add(new CBTalonSRX(0));
-        dtFrontRightMotor = hardwareAdapter.add(new CBTalonSRX(0));
-        dtBackLeftMotor   = hardwareAdapter.add(new CBTalonSRX(0));
-        dtBackRightMotor  = hardwareAdapter.add(new CBTalonSRX(0));
+        // setup dt Motors
+        dtFrontLeftMotor  = hardwareAdapter.add(new CBTalonSRX(1));
+        dtFrontRightMotor = hardwareAdapter.add(new CBTalonSRX(7));
+        dtBackLeftMotor   = hardwareAdapter.add(new CBTalonSRX(3));
+        dtBackRightMotor  = hardwareAdapter.add(new CBTalonSRX(8));
 
-        // setup dt encoders //TODO: Fix assignments, check encoding type, reversed, and ticks per inch
-        dtLeftEncoder  = hardwareAdapter.add(new CBEncoder(0, 0, CounterBase.EncodingType.k1X, false, 0));
-        dtRightEncoder = hardwareAdapter.add(new CBEncoder(0, 0, CounterBase.EncodingType.k1X, false, 0));
+        // setup dt encoders
+        final double inchesPerTick = 1/((2280.0+2219.0)/2.0/4.0/12.0);
+        dtLeftEncoder  = hardwareAdapter.add(new CBEncoder(1, 0, CounterBase.EncodingType.k4X, false, inchesPerTick));
+        dtRightEncoder = hardwareAdapter.add(new CBEncoder(3, 2, CounterBase.EncodingType.k4X, false, inchesPerTick));
 
-        // setup drive modules //TODO: Fix Vector and Orientation
-        CBDriveModule dtLeftModule  = new CBDriveModule(new CB2DVector(0, 0), 0)
+        // setup drive modules //TODO: Test Vector and Orientation
+        CBDriveModule dtLeftModule  = new CBDriveModule(new CB2DVector(-1, 0), 0)
                 .addSpeedControllerArray(new CBSrxArrayController()
                         .setDriveMode(CBEnums.CBDriveMode.Speed)
                         .addSpeedController(dtFrontLeftMotor)
                         .addSpeedController(dtBackLeftMotor)
                         .setEncoder(dtLeftEncoder));
 
-        CBDriveModule dtRightModule  = new CBDriveModule(new CB2DVector(0, 0), 0)
+        CBDriveModule dtRightModule  = new CBDriveModule(new CB2DVector(1, 0), 0)
                 .addSpeedControllerArray(new CBSrxArrayController()
                         .setDriveMode(CBEnums.CBDriveMode.Speed)
                         .addSpeedController(dtFrontRightMotor)
@@ -69,10 +71,10 @@ public class RobotCB extends Cyborg {
         DriveControls driveControls = new DriveControls(hardwareAdapter);
         driveControls.setup();
 
-        // setup teleop mapper
+        // setup teleop mapper //TODO: Tune Axis Scales
         this.addTeleOpMapper(new CBArcadeDriveMapper(this)
                 .setAxes(driveControls.getForwardAxis(), null, driveControls.getRotationalAxis())
-                .setAxisScales(0, 0, 0) // TODO: tune scales
+                .setAxisScales(0, 40, 90) // no strafe, 40 inches/second, 90 degrees/second //TODO: Tune Scales
         );
 
         // setup robot controller
