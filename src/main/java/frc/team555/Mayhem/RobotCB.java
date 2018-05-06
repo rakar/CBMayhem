@@ -59,12 +59,13 @@ public class RobotCB extends Cyborg {
         dtBackRightMotor  = hardwareAdapter.add(new CBTalonSRX(8));
 
         // setup dt encoders
-        final double inchesPerTick = 1/((2280.0+2219.0)/2.0/4.0/12.0);
+        final double inchesPerTick = 96/4499;
         dtLeftEncoder  = hardwareAdapter.add(new CBEncoder(1, 0, CounterBase.EncodingType.k4X, false, inchesPerTick));
         dtRightEncoder = hardwareAdapter.add(new CBEncoder(3, 2, CounterBase.EncodingType.k4X, false, inchesPerTick));
 
         // setup PIDs
-        CBErrorCorrection pid = new CBPIDErrorCorrection().setConstants(new double[]{1.5, 0, 0.0015});
+        CBErrorCorrection dtLeftPID = new CBPIDErrorCorrection().setConstants(new double[]{1.5, 0, 0.0015});
+        CBErrorCorrection dtRightPID = new CBPIDErrorCorrection().setConstants(new double[]{1.5, 0, 0.0015});
 
         // setup drive modules //TODO: Test Vector and Orientation
         CBDriveModule dtLeftModule  = new CBDriveModule(new CB2DVector(-1, 0), 0)
@@ -73,7 +74,7 @@ public class RobotCB extends Cyborg {
                         .addSpeedController(dtFrontLeftMotor)
                         .addSpeedController(dtBackLeftMotor)
                         .setEncoder(dtLeftEncoder)
-                        .setErrorCorrection(pid));
+                        .setErrorCorrection(dtLeftPID));
 
         CBDriveModule dtRightModule  = new CBDriveModule(new CB2DVector(1, 0), 0)
                 .addSpeedControllerArray(new CBSrxArrayController()
@@ -81,7 +82,7 @@ public class RobotCB extends Cyborg {
                         .addSpeedController(dtFrontRightMotor)
                         .addSpeedController(dtBackRightMotor)
                         .setEncoder(dtRightEncoder)
-                        .setErrorCorrection(pid));
+                        .setErrorCorrection(dtRightPID));
 
         // setup dt controller
         CBDifferentialDriveController dtController =
