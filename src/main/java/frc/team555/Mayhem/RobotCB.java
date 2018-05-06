@@ -27,7 +27,6 @@ public class RobotCB extends Cyborg {
         //navx
         navx,
 
-
         // dt Motors
         dtFrontLeftMotor,
         dtFrontRightMotor,
@@ -36,7 +35,20 @@ public class RobotCB extends Cyborg {
 
         // dt Encoders
         dtLeftEncoder,
-        dtRightEncoder;
+        dtRightEncoder,
+
+        //lift Motors
+        mainLiftMotorFront,
+        mainLiftMotorBack,
+        intakeLiftMotor,
+
+        // lift encoders
+        mainLiftEncoder,
+        intakeLiftEncoder,
+
+        // intake motors
+        intakeLeftMotor,
+        intakeRightMotor;
 
     @Override
     public void cyborgInit() {
@@ -62,6 +74,19 @@ public class RobotCB extends Cyborg {
         final double inchesPerTick = 96/4499;
         dtLeftEncoder  = hardwareAdapter.add(new CBEncoder(1, 0, CounterBase.EncodingType.k4X, false, inchesPerTick));
         dtRightEncoder = hardwareAdapter.add(new CBEncoder(3, 2, CounterBase.EncodingType.k4X, false, inchesPerTick));
+
+        // setup lift motors
+        mainLiftMotorFront = hardwareAdapter.add(new CBTalonSRX(4));
+        mainLiftMotorBack  = hardwareAdapter.add(new CBTalonSRX(2));
+        intakeLiftMotor    = hardwareAdapter.add(new CBTalonSRX(9));
+
+        // setup lift encoders
+        mainLiftEncoder = hardwareAdapter.add(new CBEncoder(4, 5, CounterBase.EncodingType.k4X, false, 0)); //TODO: Get Distance Per Pulse
+//        intakeLiftEncoder = hardwareAdapter.add(new CBEncoder(, , , , )) //TODO: FIX TALON ENCODER
+
+        // setup intake motors
+        intakeLeftMotor = hardwareAdapter.add(new CBTalonSRX(10));
+        intakeRightMotor = hardwareAdapter.add(new CBTalonSRX(5));
 
         // setup PIDs
         CBErrorCorrection dtLeftPID = new CBPIDErrorCorrection().setConstants(new double[]{1.5, 0, 0.0015});
