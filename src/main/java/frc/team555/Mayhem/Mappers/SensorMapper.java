@@ -1,4 +1,4 @@
-package frc.team555.Mayhem;
+package frc.team555.Mayhem.Mappers;
 
 import org.montclairrobotics.cyborg.Cyborg;
 import org.montclairrobotics.cyborg.data.CBDifferentialDriveControlData;

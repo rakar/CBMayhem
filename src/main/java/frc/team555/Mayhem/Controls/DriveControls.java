@@ -1,19 +1,26 @@
-package frc.team555.Mayhem;
+package frc.team555.Mayhem.Controls;
 
 import org.montclairrobotics.cyborg.CBHardwareAdapter;
 import org.montclairrobotics.cyborg.devices.CBAxis;
+import org.montclairrobotics.cyborg.devices.CBButton;
 import org.montclairrobotics.cyborg.devices.CBDeviceID;
 
 public class DriveControls {
 
     // joystick port
-    public final int driveStickID = 0;
+    private final int driveStickID = 0;
+
+    // Axis declarations
+    private CBDeviceID xAxis, yAxis;
 
     // button IDs
-    public final int gyroLockButtonID = 1;
+    private final int gyroLockButtonID = 1;
 
-    CBDeviceID xAxis, yAxis;
-    CBHardwareAdapter hardwareAdapter;
+    // button declarations
+    private CBDeviceID gyroLockButton;
+
+    // hardware adapter for CB
+    private CBHardwareAdapter hardwareAdapter;
 
     public DriveControls(CBHardwareAdapter hardwareAdapter){
         this.hardwareAdapter = hardwareAdapter;
@@ -27,6 +34,9 @@ public class DriveControls {
         yAxis = hardwareAdapter.add(new CBAxis(driveStickID, 0)
                 .setDeadzone(0.1)
                 .setScale(-1.0));
+
+        gyroLockButton = hardwareAdapter.add(new CBButton(driveStickID, gyroLockButtonID));
+
     }
 
     public CBDeviceID getForwardAxis(){
@@ -35,5 +45,9 @@ public class DriveControls {
 
     public CBDeviceID getRotationalAxis(){
         return yAxis;
+    }
+
+    public CBDeviceID getGyroLockButton(){
+        return gyroLockButton;
     }
 }

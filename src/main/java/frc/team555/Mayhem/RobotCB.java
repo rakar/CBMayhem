@@ -2,13 +2,12 @@ package frc.team555.Mayhem;
 
 import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.SPI;
+import frc.team555.Mayhem.Controls.DriveControls;
 import org.montclairrobotics.cyborg.CBHardwareAdapter;
 import org.montclairrobotics.cyborg.Cyborg;
 import org.montclairrobotics.cyborg.assemblies.CBDriveModule;
 import org.montclairrobotics.cyborg.assemblies.CBSrxArrayController;
 import org.montclairrobotics.cyborg.controllers.CBDifferentialDriveController;
-import org.montclairrobotics.cyborg.controllers.CBDriveController;
-import org.montclairrobotics.cyborg.data.CBDriveControlData;
 import org.montclairrobotics.cyborg.data.CBStdDriveControlData;
 import org.montclairrobotics.cyborg.data.CBStdDriveRequestData;
 import org.montclairrobotics.cyborg.devices.*;
@@ -21,8 +20,6 @@ import org.montclairrobotics.cyborg.utils.CBPIDErrorCorrection;
 public class RobotCB extends Cyborg {
 
     private CBDeviceID
-        // drive buttons
-        gyroLockButton,
 
         //navx
         navx,
@@ -119,14 +116,11 @@ public class RobotCB extends Cyborg {
         DriveControls driveControls = new DriveControls(hardwareAdapter);
         driveControls.setup();
 
-        // drive button
-        gyroLockButton = hardwareAdapter.add(new CBButton(driveControls.driveStickID, driveControls.gyroLockButtonID));
-
         // setup teleop mapper //TODO: Tune Axis Scales
         this.addTeleOpMapper(new CBArcadeDriveMapper(this)
                 .setAxes(driveControls.getForwardAxis(), null, driveControls.getRotationalAxis())
                 .setAxisScales(0, 40, 90) // no strafe, 40 inches/second, 90 degrees/second //TODO: Tune Scales
-                .setGyroLockButton(gyroLockButton)
+                .setGyroLockButton(driveControls.getGyroLockButton())
         );
 
         // setup robot controller
