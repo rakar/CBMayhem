@@ -1,4 +1,4 @@
-package frc.team555.Mayhem.Controls;
+package frc.team555.Mayhem.UserControls;
 
 import org.montclairrobotics.cyborg.CBHardwareAdapter;
 import org.montclairrobotics.cyborg.devices.CBAxis;

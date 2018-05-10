@@ -1,10 +1,9 @@
-package frc.team555.Mayhem.Controls;
+package frc.team555.Mayhem.UserControls;
 
 import frc.team555.Mayhem.Mappers.OperatorMapper;
 import org.montclairrobotics.cyborg.CBHardwareAdapter;
 import org.montclairrobotics.cyborg.devices.CBAxis;
 import org.montclairrobotics.cyborg.devices.CBButton;
-import org.montclairrobotics.cyborg.devices.CBDevice;
 import org.montclairrobotics.cyborg.devices.CBDeviceID;
 
 public class OperatorControls {
