@@ -2,7 +2,7 @@ package frc.team555.Mayhem;
 
 import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.SPI;
-import frc.team555.Mayhem.Controls.DriveControls;
+import frc.team555.Mayhem.Controls.DriverControls;
 import org.montclairrobotics.cyborg.CBHardwareAdapter;
 import org.montclairrobotics.cyborg.Cyborg;
 import org.montclairrobotics.cyborg.assemblies.CBDriveModule;
@@ -113,7 +113,7 @@ public class RobotCB extends Cyborg {
                     .addDriveModule(dtRightModule);
 
         // setup drive controller
-        DriveControls driveControls = new DriveControls(hardwareAdapter);
+        DriverControls driveControls = new DriverControls(hardwareAdapter);
         driveControls.setup();
 
         // setup teleop mapper //TODO: Tune Axis Scales
@@ -125,7 +125,6 @@ public class RobotCB extends Cyborg {
 
         // setup robot controller
         this.addRobotController(dtController);
-
 
     }
 

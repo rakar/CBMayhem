@@ -1,5 +1,6 @@
 package frc.team555.Mayhem.Controls;
 
+import frc.team555.Mayhem.Mappers.OperatorMapper;
 import org.montclairrobotics.cyborg.CBHardwareAdapter;
 import org.montclairrobotics.cyborg.devices.CBAxis;
 import org.montclairrobotics.cyborg.devices.CBButton;
@@ -16,6 +17,9 @@ public class OperatorControls {
 
     // hardware adapter for CB
     CBHardwareAdapter hardwareAdapter;
+
+    // Set Mapper for Operator controls
+    OperatorMapper operatorMapper;
 
     // button IDs
     private final int shootCubeButtonID      = 1;
@@ -36,6 +40,8 @@ public class OperatorControls {
     }
 
     public void setup(){
+
+        // setup axis
         xAxis = hardwareAdapter.add(new CBAxis(operatorStickID, 1)
                 .setDeadzone(0.1)
                 .setScale(-1.0));
@@ -44,11 +50,19 @@ public class OperatorControls {
                 .setDeadzone(0.1)
                 .setScale(-1.0));
 
+        // setup buttons
         shootCubeButton      = hardwareAdapter.add(new CBButton(operatorStickID, shootCubeButtonID));
         intakeLiftUpButton   = hardwareAdapter.add(new CBButton(operatorStickID, intakeLiftUpButtonID));
         intakeLiftDownButton = hardwareAdapter.add(new CBButton(operatorStickID, intakeLiftDownButtonID));
         mainLiftUpButton     = hardwareAdapter.add(new CBButton(operatorStickID, mainLiftUpButtonID));
         mainLiftDownButton   = hardwareAdapter.add(new CBButton(operatorStickID, mainLiftDownButtonID));
+
+        // configure button to mapper
+        operatorMapper.setShootCubeButton(shootCubeButton);
+        operatorMapper.setIntakeLiftUpButton(intakeLiftUpButton);
+        operatorMapper.setIntakeLiftDownButton(intakeLiftDownButton);
+        operatorMapper.setMainLiftUpButton(mainLiftUpButton);
+        operatorMapper.setMainLiftDownButton(mainLiftDownButton);
     }
 
     public CBDeviceID getForwardAxis(){

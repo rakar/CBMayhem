@@ -5,7 +5,7 @@ import org.montclairrobotics.cyborg.devices.CBAxis;
 import org.montclairrobotics.cyborg.devices.CBButton;
 import org.montclairrobotics.cyborg.devices.CBDeviceID;
 
-public class DriveControls {
+public class DriverControls {
 
     // joystick port
     private final int driveStickID = 0;
@@ -22,7 +22,7 @@ public class DriveControls {
     // hardware adapter for CB
     private CBHardwareAdapter hardwareAdapter;
 
-    public DriveControls(CBHardwareAdapter hardwareAdapter){
+    public DriverControls(CBHardwareAdapter hardwareAdapter){
         this.hardwareAdapter = hardwareAdapter;
     }
 
