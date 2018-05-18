@@ -60,7 +60,7 @@ public class RobotCB extends Cyborg {
         CBHardwareAdapter hardwareAdapter = Cyborg.hardwareAdapter;
 
         // data init
-        // rich: the following two lines added.
+        // TODO: the following two lines added.
         requestData = new RequestData();
         controlData = new ControlData();
         requestData.driveData = new CBStdDriveRequestData();
@@ -99,7 +99,7 @@ public class RobotCB extends Cyborg {
 
         // setup drive modules //TODO: Test Vector and Orientation
         CBDriveModule dtLeftModule  = new CBDriveModule(new CB2DVector(-1, 0), 0)
-                // CBSrxArrayController has no implementation yet so change to
+                // TODO: CBSrxArrayController has no implementation yet so change to
                 // CBVictorArrayController and change mode to Power for simplicity
                 .addSpeedControllerArray(new CBVictorArrayController()
                         .setDriveMode(CBEnums.CBDriveMode.Power)
@@ -108,8 +108,9 @@ public class RobotCB extends Cyborg {
                         .setEncoder(dtLeftEncoder)
                         .setErrorCorrection(dtLeftPID));
 
-        CBDriveModule dtRightModule  = new CBDriveModule(new CB2DVector(1, 0), 0)
-                // CBSrxArrayController has no implementation yet so change to
+        // TODO: change orientation since natural "forward" on the right side goes 180 away from the front of the robot
+        CBDriveModule dtRightModule  = new CBDriveModule(new CB2DVector(1, 0), 180)
+                // TODO: CBSrxArrayController has no implementation yet so change to
                 // CBVictorArrayController and change mode to Power for simplicity
                 .addSpeedControllerArray(new CBVictorArrayController()
                         .setDriveMode(CBEnums.CBDriveMode.Power)
@@ -122,7 +123,10 @@ public class RobotCB extends Cyborg {
         CBDifferentialDriveController dtController =
                 new CBDifferentialDriveController(this)
                     .addLeftDriveModule(dtLeftModule)
-                    .addDriveModule(dtRightModule);
+                    // TODO: changed line below...
+                    //.addDriveModule(dtRightModule);
+                    .addRightDriveModule(dtRightModule)
+                ;
 
         // setup drive controller
         DriverControls driveControls = new DriverControls(hardwareAdapter);
@@ -136,7 +140,7 @@ public class RobotCB extends Cyborg {
         // setup teleop mapper //TODO: Tune Axis Scales
         this.addTeleOpMapper(new CBArcadeDriveMapper(this)
                 .setAxes(driveControls.getForwardAxis(), null, driveControls.getRotationalAxis())
-                // rich: the following line commented because the mode above was changed to Power (from speed)
+                // TODO: the following line commented because the mode above was changed to Power (from speed)
                 //.setAxisScales(0, 40, 90) // no strafe, 40 inches/second, 90 degrees/second //TODO: Tune Scales
                 .setGyroLockButton(driveControls.getGyroLockButton())
         );
@@ -144,7 +148,7 @@ public class RobotCB extends Cyborg {
         // setup robot controller
         this.addRobotController(dtController);
 
-        // rich: behaviors connect mappers and controllers
+        // TODO: add behavior(s) they connect mappers and controllers
         // setup behaviors
         this.addBehavior(new CBStdDriveBehavior(this));
 
