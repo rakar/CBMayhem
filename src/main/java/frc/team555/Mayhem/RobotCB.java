@@ -2,12 +2,16 @@ package frc.team555.Mayhem;
 
 import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.SPI;
+import frc.team555.Mayhem.Data.ControlData;
+import frc.team555.Mayhem.Data.RequestData;
 import frc.team555.Mayhem.UserControls.DriverControls;
 import frc.team555.Mayhem.UserControls.OperatorControls;
 import org.montclairrobotics.cyborg.CBHardwareAdapter;
 import org.montclairrobotics.cyborg.Cyborg;
 import org.montclairrobotics.cyborg.assemblies.CBDriveModule;
 import org.montclairrobotics.cyborg.assemblies.CBSrxArrayController;
+import org.montclairrobotics.cyborg.assemblies.CBVictorArrayController;
+import org.montclairrobotics.cyborg.behaviors.CBStdDriveBehavior;
 import org.montclairrobotics.cyborg.controllers.CBDifferentialDriveController;
 import org.montclairrobotics.cyborg.data.CBStdDriveControlData;
 import org.montclairrobotics.cyborg.data.CBStdDriveRequestData;
@@ -56,6 +60,9 @@ public class RobotCB extends Cyborg {
         CBHardwareAdapter hardwareAdapter = Cyborg.hardwareAdapter;
 
         // data init
+        // rich: the following two lines added.
+        requestData = new RequestData();
+        controlData = new ControlData();
         requestData.driveData = new CBStdDriveRequestData();
         controlData.driveData = new CBStdDriveControlData();
 
@@ -92,16 +99,20 @@ public class RobotCB extends Cyborg {
 
         // setup drive modules //TODO: Test Vector and Orientation
         CBDriveModule dtLeftModule  = new CBDriveModule(new CB2DVector(-1, 0), 0)
-                .addSpeedControllerArray(new CBSrxArrayController()
-                        .setDriveMode(CBEnums.CBDriveMode.Speed)
+                // CBSrxArrayController has no implementation yet so change to
+                // CBVictorArrayController and change mode to Power for simplicity
+                .addSpeedControllerArray(new CBVictorArrayController()
+                        .setDriveMode(CBEnums.CBDriveMode.Power)
                         .addSpeedController(dtFrontLeftMotor)
                         .addSpeedController(dtBackLeftMotor)
                         .setEncoder(dtLeftEncoder)
                         .setErrorCorrection(dtLeftPID));
 
         CBDriveModule dtRightModule  = new CBDriveModule(new CB2DVector(1, 0), 0)
-                .addSpeedControllerArray(new CBSrxArrayController()
-                        .setDriveMode(CBEnums.CBDriveMode.Speed)
+                // CBSrxArrayController has no implementation yet so change to
+                // CBVictorArrayController and change mode to Power for simplicity
+                .addSpeedControllerArray(new CBVictorArrayController()
+                        .setDriveMode(CBEnums.CBDriveMode.Power)
                         .addSpeedController(dtFrontRightMotor)
                         .addSpeedController(dtBackRightMotor)
                         .setEncoder(dtRightEncoder)
@@ -120,17 +131,22 @@ public class RobotCB extends Cyborg {
         // setup operator controller
         OperatorControls operatorControls = new OperatorControls(hardwareAdapter);
         // TODO: fix line below
-        driveControls.setup();
+        //driveControls.setup();
 
         // setup teleop mapper //TODO: Tune Axis Scales
         this.addTeleOpMapper(new CBArcadeDriveMapper(this)
                 .setAxes(driveControls.getForwardAxis(), null, driveControls.getRotationalAxis())
-                .setAxisScales(0, 40, 90) // no strafe, 40 inches/second, 90 degrees/second //TODO: Tune Scales
+                // rich: the following line commented because the mode above was changed to Power (from speed)
+                //.setAxisScales(0, 40, 90) // no strafe, 40 inches/second, 90 degrees/second //TODO: Tune Scales
                 .setGyroLockButton(driveControls.getGyroLockButton())
         );
 
         // setup robot controller
         this.addRobotController(dtController);
+
+        // rich: behaviors connect mappers and controllers
+        // setup behaviors
+        this.addBehavior(new CBStdDriveBehavior(this));
 
     }
 
