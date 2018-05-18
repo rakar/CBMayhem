@@ -25,6 +25,7 @@ public class OperatorMapper extends CBTeleOpMapper {
         requestData.shootCube      = shootCubeButton.getState();
         requestData.intakeLiftUp   = intakeLiftUpButton.getState();
         requestData.intakeLiftDown = intakeLiftDownButton.getState();
+        // TODO: Fix following line
         requestData.mainLiftUp     = intakeLiftUpButton.getState();
         requestData.mainLIftDown   = mainLiftDownButton.getState();
     }

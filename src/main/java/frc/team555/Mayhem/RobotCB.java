@@ -119,6 +119,7 @@ public class RobotCB extends Cyborg {
 
         // setup operator controller
         OperatorControls operatorControls = new OperatorControls(hardwareAdapter);
+        // TODO: fix line below
         driveControls.setup();
 
         // setup teleop mapper //TODO: Tune Axis Scales
