@@ -18,7 +18,7 @@ public class OperatorControls {
     CBHardwareAdapter hardwareAdapter;
 
     // Set Mapper for Operator controls
-    OperatorMapper operatorMapper;
+    public OperatorMapper operatorMapper;
 
     // button IDs
     private final int shootCubeButtonID      = 1;

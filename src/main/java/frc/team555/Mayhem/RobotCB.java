@@ -2,17 +2,20 @@ package frc.team555.Mayhem;
 
 import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.SPI;
+import frc.team555.Mayhem.Behaviors.MainLiftBehavior;
 import frc.team555.Mayhem.Data.ControlData;
 import frc.team555.Mayhem.Data.RequestData;
+import frc.team555.Mayhem.Mappers.OperatorMapper;
+import frc.team555.Mayhem.Mappers.SensorMapper;
 import frc.team555.Mayhem.UserControls.DriverControls;
 import frc.team555.Mayhem.UserControls.OperatorControls;
 import org.montclairrobotics.cyborg.CBHardwareAdapter;
 import org.montclairrobotics.cyborg.Cyborg;
 import org.montclairrobotics.cyborg.assemblies.CBDriveModule;
-import org.montclairrobotics.cyborg.assemblies.CBSrxArrayController;
 import org.montclairrobotics.cyborg.assemblies.CBVictorArrayController;
 import org.montclairrobotics.cyborg.behaviors.CBStdDriveBehavior;
 import org.montclairrobotics.cyborg.controllers.CBDifferentialDriveController;
+import org.montclairrobotics.cyborg.controllers.CBLiftController;
 import org.montclairrobotics.cyborg.data.CBStdDriveControlData;
 import org.montclairrobotics.cyborg.data.CBStdDriveRequestData;
 import org.montclairrobotics.cyborg.devices.*;
@@ -47,6 +50,9 @@ public class RobotCB extends Cyborg {
         // lift encoders
         mainLiftEncoder,
         intakeLiftEncoder,
+
+        // lift limit switches
+        mainLiftLimit,
 
         // intake motors
         intakeLeftMotor,
@@ -86,8 +92,10 @@ public class RobotCB extends Cyborg {
         intakeLiftMotor    = hardwareAdapter.add(new CBTalonSRX(9));
 
         // setup lift encoders
-        mainLiftEncoder = hardwareAdapter.add(new CBEncoder(4, 5, CounterBase.EncodingType.k4X, false, 0)); //TODO: Get Distance Per Pulse
+        mainLiftEncoder = hardwareAdapter.add(new CBEncoder(4, 5, CounterBase.EncodingType.k4X, false, 1)); //TODO: Get Distance Per Pulse
 //        intakeLiftEncoder = hardwareAdapter.add(new CBEncoder(, , , , )) //TODO: FIX TALON ENCODER
+
+        mainLiftLimit = hardwareAdapter.add(new CBDigitalInput(9));
 
         // setup intake motors
         intakeLeftMotor = hardwareAdapter.add(new CBTalonSRX(10));
@@ -136,6 +144,8 @@ public class RobotCB extends Cyborg {
         OperatorControls operatorControls = new OperatorControls(hardwareAdapter);
         // TODO: fix line below
         //driveControls.setup();
+        operatorControls.operatorMapper = new OperatorMapper(this);
+        operatorControls.setup();
 
         // setup teleop mapper //TODO: Tune Axis Scales
         this.addTeleOpMapper(new CBArcadeDriveMapper(this)
@@ -145,12 +155,38 @@ public class RobotCB extends Cyborg {
                 .setGyroLockButton(driveControls.getGyroLockButton())
         );
 
+        this.addTeleOpMapper(operatorControls.operatorMapper);
+        this.addCustomMapper(new SensorMapper(this).setMainLiftLimits(mainLiftEncoder, mainLiftLimit));
+
         // setup robot controller
         this.addRobotController(dtController);
 
-        // TODO: add behavior(s) they connect mappers and controllers
+        // main lift controller definition
+        this.addRobotController(
+                // hardware configurations are done here.
+                // there are other "soft" configurations done in the mapper
+                // that include margins (which trigger slow motion)
+                // and in this case a encoder based top limit
+                new CBLiftController(this)
+                // setData allows you to pick a CBLinearControllerData variable
+                // in controlData to use for this lift. There might be several
+                // lift controllers and each one would be controlled by a different
+                // CBLinearControllerData object in controlData.
+                .setData(((ControlData)controlData).mainLift)
+                // set a lower limit switch this is a hard limit
+                .setBottomLimit(mainLiftLimit)
+                // set the encoder for the lift
+                .setEncoder(mainLiftEncoder)
+                // attach a speed controller array to drive the lift
+                .setSpeedControllerArray(new CBVictorArrayController()
+                        .addSpeedController(mainLiftMotorFront)
+                        .setDriveMode(CBEnums.CBDriveMode.Power)
+                )
+        );
+
         // setup behaviors
         this.addBehavior(new CBStdDriveBehavior(this));
+        this.addBehavior(new MainLiftBehavior(this));
 
     }
 

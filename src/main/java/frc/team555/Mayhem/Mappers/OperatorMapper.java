@@ -1,5 +1,6 @@
 package frc.team555.Mayhem.Mappers;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.team555.Mayhem.Data.RequestData;
 import org.montclairrobotics.cyborg.Cyborg;
 import org.montclairrobotics.cyborg.devices.CBButton;
@@ -25,9 +26,11 @@ public class OperatorMapper extends CBTeleOpMapper {
         requestData.shootCube      = shootCubeButton.getState();
         requestData.intakeLiftUp   = intakeLiftUpButton.getState();
         requestData.intakeLiftDown = intakeLiftDownButton.getState();
-        // TODO: Fix following line
-        requestData.mainLiftUp     = intakeLiftUpButton.getState();
+        requestData.mainLiftUp     = mainLiftUpButton.getState();
         requestData.mainLIftDown   = mainLiftDownButton.getState();
+
+        SmartDashboard.putBoolean("mainLiftUpButton", requestData.mainLiftUp);
+        SmartDashboard.putBoolean("mainLiftDownButton", requestData.mainLIftDown);
     }
 
     public OperatorMapper setShootCubeButton(CBDeviceID buttonID){

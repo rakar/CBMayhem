@@ -11,4 +11,8 @@ public class RequestData extends CBRequestData {
     public boolean mainLiftUp;
     public boolean mainLIftDown;
 
+    // sensors
+    public double mainLiftEncoderValue;
+    public boolean mainLiftLimitValue;
+
 }
