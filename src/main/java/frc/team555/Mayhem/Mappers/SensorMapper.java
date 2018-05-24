@@ -14,8 +14,6 @@ import org.montclairrobotics.cyborg.mappers.CBCustomMapper;
 
 public class SensorMapper extends CBCustomMapper {
 
-    //Cyborg robot;
-    //CBStdDriveRequestData stdDriveRequestData = (CBStdDriveRequestData) Cyborg.requestData.driveData;
     RequestData rd;
 
     //CBNavXYawSource navXYawSource;

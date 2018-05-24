@@ -244,7 +244,7 @@ public class RobotCB extends Cyborg {
                 new CBButton(operatorStickID, mainLiftDownButtonID)
         );
 
-        // setup teleop mapper
+        // setup teleop mappers
         this.addTeleOpMapper(
                 new CBArcadeDriveMapper(this)
                         .setAxes(driveYAxis, null, driveXAxis)
@@ -256,7 +256,7 @@ public class RobotCB extends Cyborg {
 
         // Here is a hack:
         // create a second "drivetrain" to operate the intake
-        // because the work the same way...
+        // because they work the same way...
         this.addTeleOpMapper(
                 new CBArcadeDriveMapper(this)
                         .setAxes(operYAxis, null, operXAxis)
