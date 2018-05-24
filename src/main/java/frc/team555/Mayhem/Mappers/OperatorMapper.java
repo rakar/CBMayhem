@@ -29,8 +29,8 @@ public class OperatorMapper extends CBTeleOpMapper {
         requestData.mainLiftUp     = mainLiftUpButton.getState();
         requestData.mainLIftDown   = mainLiftDownButton.getState();
 
-        SmartDashboard.putBoolean("mainLiftUpButton", requestData.mainLiftUp);
-        SmartDashboard.putBoolean("mainLiftDownButton", requestData.mainLIftDown);
+        SmartDashboard.putBoolean("intakeLiftUpButton", requestData.intakeLiftUp);
+        SmartDashboard.putBoolean("intakeLiftDownButton", requestData.intakeLiftDown);
     }
 
     public OperatorMapper setShootCubeButton(CBDeviceID buttonID){

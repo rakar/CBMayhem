@@ -22,8 +22,8 @@ public class OperatorControls {
 
     // button IDs
     private final int shootCubeButtonID      = 1;
-    private final int intakeLiftUpButtonID   = 2;
-    private final int intakeLiftDownButtonID = 3;
+    private final int intakeLiftUpButtonID   = 3;
+    private final int intakeLiftDownButtonID = 2;
     private final int mainLiftUpButtonID     = 4;
     private final int mainLiftDownButtonID   = 5;
 

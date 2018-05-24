@@ -1,6 +1,7 @@
 package frc.team555.Mayhem.Data;
 
 import org.montclairrobotics.cyborg.data.CBRequestData;
+import org.montclairrobotics.cyborg.data.CBStdDriveRequestData;
 
 public class RequestData extends CBRequestData {
 
@@ -14,5 +15,8 @@ public class RequestData extends CBRequestData {
     // sensors
     public double mainLiftEncoderValue;
     public boolean mainLiftLimitValue;
+
+    // crazy second drivetrain for intake
+    public CBStdDriveRequestData intake = new CBStdDriveRequestData();
 
 }

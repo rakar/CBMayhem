@@ -22,6 +22,7 @@ public class SensorMapper extends CBCustomMapper {
 
     CBEncoder mainLiftEncoder;
     CBDigitalInput mainLiftLimit;
+    CBEncoder intakeLiftEncoder;
 
     public SensorMapper(Cyborg robot) {
         super(robot);
@@ -38,12 +39,14 @@ public class SensorMapper extends CBCustomMapper {
         rd.mainLiftLimitValue = mainLiftLimit.get();
         SmartDashboard.putBoolean("mainLiftLimit", rd.mainLiftLimitValue);
         SmartDashboard.putNumber("mainLiftEncoder", rd.mainLiftEncoderValue);
+        SmartDashboard.putNumber("intakeLiftEncoder", intakeLiftEncoder.getDistance());
         //
     }
 
-    public CBCustomMapper setMainLiftLimits(CBDeviceID encoder, CBDeviceID bLimit) {
+    public CBCustomMapper setMainLiftLimits(CBDeviceID encoder, CBDeviceID bLimit, CBDeviceID intakeLiftEncoder) {
         mainLiftEncoder = Cyborg.hardwareAdapter.getEncoder(encoder);
         mainLiftLimit = Cyborg.hardwareAdapter.getDigitalInput(bLimit);
+        this.intakeLiftEncoder = Cyborg.hardwareAdapter.getEncoder(intakeLiftEncoder);
         return this;
     }
 }
