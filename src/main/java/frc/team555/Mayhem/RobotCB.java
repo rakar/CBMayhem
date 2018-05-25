@@ -34,16 +34,6 @@ public class RobotCB extends Cyborg {
     private final int driveStickID = 0;
     private final int operatorStickID = 1;
 
-    // button IDs
-    private final int gyroLockButtonID = 1;
-
-    private final int shootCubeButtonID = 1;
-    private final int intakeLiftUpButtonID = 3;
-    private final int intakeLiftDownButtonID = 2;
-    private final int mainLiftUpButtonID = 4;
-    private final int mainLiftDownButtonID = 5;
-
-
     private CBDeviceID
             // power dist board
             pdb,
@@ -114,7 +104,6 @@ public class RobotCB extends Cyborg {
                                 new CBSpeedControllerFaultCriteria()
                                         .setBasic(.1, 1, 30)
                         )
-
         );
         dtBackLeftMotor = ha.add(
                 new CBTalonSRX(3)
@@ -131,7 +120,6 @@ public class RobotCB extends Cyborg {
                                 new CBSpeedControllerFaultCriteria()
                                         .setBasic(.1, 1, 30)
                         )
-
         );
         final double inchesPerTick = 96 / 4499;
         dtLeftEncoder = ha.add(
@@ -175,7 +163,6 @@ public class RobotCB extends Cyborg {
                                 new CBSpeedControllerFaultCriteria()
                                         .setBasic(.1, 1, 20)
                         )
-
         );
         intakeLiftEncoder = ha.add(
                 new CBEncoder(intakeLiftMotor, FeedbackDevice.QuadEncoder, false, 1)
@@ -212,7 +199,7 @@ public class RobotCB extends Cyborg {
                         .setScale(-1.0)
         );
         gyroLockButton = hardwareAdapter.add(
-                new CBButton(driveStickID, gyroLockButtonID)
+                new CBButton(driveStickID, 1)
         );
 
         // operator controls
@@ -229,19 +216,19 @@ public class RobotCB extends Cyborg {
         );
 
         shootCubeButton = ha.add(
-                new CBButton(operatorStickID, shootCubeButtonID)
+                new CBButton(operatorStickID, 1)
         );
         intakeLiftUpButton = ha.add(
-                new CBButton(operatorStickID, intakeLiftUpButtonID)
+                new CBButton(operatorStickID, 3)
         );
         intakeLiftDownButton = ha.add(
-                new CBButton(operatorStickID, intakeLiftDownButtonID)
+                new CBButton(operatorStickID, 2)
         );
         mainLiftUpButton = ha.add(
-                new CBButton(operatorStickID, mainLiftUpButtonID)
+                new CBButton(operatorStickID, 4)
         );
         mainLiftDownButton = ha.add(
-                new CBButton(operatorStickID, mainLiftDownButtonID)
+                new CBButton(operatorStickID, 5)
         );
 
         // setup teleop mappers
@@ -297,30 +284,32 @@ public class RobotCB extends Cyborg {
                         .addLeftDriveModule(
                                 new CBDriveModule(
                                         new CB2DVector(-1, 0), 0)
-                                        .addSpeedControllerArray(new CBVictorArrayController()
-                                                .setDriveMode(CBEnums.CBDriveMode.Power)
-                                                .addSpeedController(dtFrontLeftMotor)
-                                                .addSpeedController(dtBackLeftMotor)
-                                                .setEncoder(dtLeftEncoder)
-                                                .setErrorCorrection(
-                                                        new CBPIDErrorCorrection()
-                                                                .setConstants(new double[]{1.5, 0, 0.0015}
-                                                                )
-                                                )
+                                        .addSpeedControllerArray(
+                                                new CBVictorArrayController()
+                                                        .setDriveMode(CBEnums.CBDriveMode.Power)
+                                                        .addSpeedController(dtFrontLeftMotor)
+                                                        .addSpeedController(dtBackLeftMotor)
+                                                        .setEncoder(dtLeftEncoder)
+                                                        .setErrorCorrection(
+                                                                new CBPIDErrorCorrection()
+                                                                        .setConstants(new double[]{1.5, 0, 0.0015}
+                                                                        )
+                                                        )
                                         )
                         )
                         .addRightDriveModule(
                                 new CBDriveModule(new CB2DVector(1, 0), 180)
-                                        .addSpeedControllerArray(new CBVictorArrayController()
-                                                .setDriveMode(CBEnums.CBDriveMode.Power)
-                                                .addSpeedController(dtFrontRightMotor)
-                                                .addSpeedController(dtBackRightMotor)
-                                                .setEncoder(dtRightEncoder)
-                                                .setErrorCorrection(
-                                                        new CBPIDErrorCorrection()
-                                                                .setConstants(new double[]{1.5, 0, 0.0015}
-                                                                )
-                                                )
+                                        .addSpeedControllerArray(
+                                                new CBVictorArrayController()
+                                                        .setDriveMode(CBEnums.CBDriveMode.Power)
+                                                        .addSpeedController(dtFrontRightMotor)
+                                                        .addSpeedController(dtBackRightMotor)
+                                                        .setEncoder(dtRightEncoder)
+                                                        .setErrorCorrection(
+                                                                new CBPIDErrorCorrection()
+                                                                        .setConstants(new double[]{1.5, 0, 0.0015}
+                                                                        )
+                                                        )
                                         )
                         )
         );
