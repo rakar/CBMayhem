@@ -91,6 +91,7 @@ public class RobotCB extends Cyborg {
         // setup drivetrain
         dtFrontLeftMotor = ha.add(
                 new CBTalonSRX(1)
+                        .setDeviceName("DriveTrain", "FrontLeft")
                         .setPowerSource(pdb, 0)
                         .setSpeedControllerFaultCriteria(
                                 new CBSpeedControllerFaultCriteria()
@@ -99,6 +100,7 @@ public class RobotCB extends Cyborg {
         );
         dtFrontRightMotor = ha.add(
                 new CBTalonSRX(7)
+                        .setDeviceName("DriveTrain", "FrontRight")
                         .setPowerSource(pdb, 1)
                         .setSpeedControllerFaultCriteria(
                                 new CBSpeedControllerFaultCriteria()
@@ -107,6 +109,7 @@ public class RobotCB extends Cyborg {
         );
         dtBackLeftMotor = ha.add(
                 new CBTalonSRX(3)
+                        .setDeviceName("DriveTrain", "BackLeft")
                         .setPowerSource(pdb, 2)
                         .setSpeedControllerFaultCriteria(
                                 new CBSpeedControllerFaultCriteria()
@@ -115,6 +118,7 @@ public class RobotCB extends Cyborg {
         );
         dtBackRightMotor = ha.add(
                 new CBTalonSRX(8)
+                        .setDeviceName("DriveTrain", "BackRight")
                         .setPowerSource(pdb, 3)
                         .setSpeedControllerFaultCriteria(
                                 new CBSpeedControllerFaultCriteria()
@@ -133,6 +137,7 @@ public class RobotCB extends Cyborg {
         // setup main lift
         mainLiftMotorFront = ha.add(
                 new CBTalonSRX(4)
+                        .setDeviceName("MainLift", "Front")
                         .setPowerSource(pdb, 4)
                         .setSpeedControllerFaultCriteria(
                                 new CBSpeedControllerFaultCriteria()
@@ -141,6 +146,7 @@ public class RobotCB extends Cyborg {
         );
         mainLiftMotorBack = ha.add(
                 new CBTalonSRX(2)
+                        .setDeviceName("MainLift", "Back")
                         .setPowerSource(pdb, 5)
                         .setSpeedControllerFaultCriteria(
                                 new CBSpeedControllerFaultCriteria()
@@ -158,6 +164,7 @@ public class RobotCB extends Cyborg {
         // setup intake lift
         intakeLiftMotor = ha.add(
                 new CBTalonSRX(9)
+                        .setDeviceName("Intake", "LiftMotor")
                         .setPowerSource(pdb, 6)
                         .setSpeedControllerFaultCriteria(
                                 new CBSpeedControllerFaultCriteria()
@@ -172,6 +179,7 @@ public class RobotCB extends Cyborg {
         // setup intake motors
         intakeLeftMotor = ha.add(
                 new CBTalonSRX(10)
+                        .setDeviceName( "Intake", "LeftMotor")
                         .setPowerSource(pdb, 8)
                         .setSpeedControllerFaultCriteria(
                                 new CBSpeedControllerFaultCriteria()
@@ -180,6 +188,7 @@ public class RobotCB extends Cyborg {
         );
         intakeRightMotor = ha.add(
                 new CBTalonSRX(5)
+                        .setDeviceName("Intake", "RightMotor")
                         .setPowerSource(pdb, 9)
                         .setSpeedControllerFaultCriteria(
                                 new CBSpeedControllerFaultCriteria()
