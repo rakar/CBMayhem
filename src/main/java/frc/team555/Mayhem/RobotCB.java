@@ -362,9 +362,10 @@ public class RobotCB extends Cyborg {
                         // set the encoder for the lift
                         .setEncoder(mainLiftEncoder)
                         // attach a speed controller array to drive the lift
-                        .setSpeedControllerArray(new CBVictorArrayController()
-                                .addSpeedController(mainLiftMotorFront)
-                                .setDriveMode(CBEnums.CBDriveMode.Power)
+                        .setSpeedControllerArray(
+                                new CBVictorArrayController()
+                                    .addSpeedController(mainLiftMotorFront)
+                                    .setDriveMode(CBEnums.CBDriveMode.Power)
                         )
         );
 
@@ -373,7 +374,7 @@ public class RobotCB extends Cyborg {
                 // hardware configurations are done here.
                 // there are other "soft" configurations done in the mapper
                 // that include margins (which trigger slow motion)
-                // and in this case a encoder based top limit
+                // and in this case an encoder based top limit
                 new CBLiftController(this)
                         // setData allows you to pick a CBLinearControllerData variable
                         // in controlData to use for this lift. There might be several
@@ -385,9 +386,10 @@ public class RobotCB extends Cyborg {
                         // set the encoder for the lift
                         .setEncoder(intakeLiftEncoder)
                         // attach a speed controller array to drive the lift
-                        .setSpeedControllerArray(new CBVictorArrayController()
-                                .addSpeedController(intakeLiftMotor)
-                                .setDriveMode(CBEnums.CBDriveMode.Power)
+                        .setSpeedControllerArray(
+                                new CBVictorArrayController()
+                                    .addSpeedController(intakeLiftMotor)
+                                    .setDriveMode(CBEnums.CBDriveMode.Power)
                         )
         );
 

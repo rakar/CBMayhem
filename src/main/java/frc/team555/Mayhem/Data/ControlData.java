@@ -7,9 +7,9 @@ import org.montclairrobotics.cyborg.utils.CBTriState;
 
 public class ControlData extends CBControlData {
 
-    public CBTriState intakeStatus;
-    public CBTriState intakeLiftStatus;
-    public CBTriState mainLiftStatus;
+    //public CBTriState intakeStatus;
+    //public CBTriState intakeLiftStatus;
+    //public CBTriState mainLiftStatus;
 
     public CBLiftControllerData mainLift = new CBLiftControllerData();
     public CBLiftControllerData intakeLift = new CBLiftControllerData();
