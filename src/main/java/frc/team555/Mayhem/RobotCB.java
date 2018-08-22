@@ -409,6 +409,16 @@ public class RobotCB extends Cyborg {
     }
 
     @Override
+    public void cyborgDisabledInit() {
+
+    }
+
+    @Override
+    public void cyborgAutonomousInit() {
+
+    }
+
+    @Override
     public void cyborgTeleopInit() {
 
     }
@@ -418,8 +428,10 @@ public class RobotCB extends Cyborg {
 
     }
 
+    /*
     @Override
     public void cyborgTestPeriodic() {
 
     }
+    */
 }
