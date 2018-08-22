@@ -356,7 +356,7 @@ public class RobotCB extends Cyborg {
                         // in controlData to use for this lift. There might be several
                         // lift controllers and each one would be controlled by a different
                         // CBLinearControllerData object in controlData.
-                        .setControlData(((ControlData) controlData).mainLift)
+                        .setData(((ControlData) controlData).mainLift)
                         // set a lower limit switch this is a hard limit
                         .setBottomLimit(mainLiftLimit)
                         // set the encoder for the lift
@@ -380,7 +380,7 @@ public class RobotCB extends Cyborg {
                         // in controlData to use for this lift. There might be several
                         // lift controllers and each one would be controlled by a different
                         // CBLinearControllerData object in controlData.
-                        .setControlData(((ControlData) controlData).intakeLift)
+                        .setData(((ControlData) controlData).intakeLift)
                         // set a lower limit switch this is a hard limit
                         //.setBottomLimit(mainLiftLimit)
                         // set the encoder for the lift
