@@ -32,8 +32,6 @@ public class RobotCB extends Cyborg {
 
     // constants
     // joystick ports
-    private final int driveStickID = 0;
-    private final int operatorStickID = 1;
 
     //
     // This has been changed to "public static" from "private" to allow
@@ -79,6 +77,9 @@ public class RobotCB extends Cyborg {
 
     @Override
     public void cyborgInit() {
+
+        final int driveStickID = 0;
+        final int operatorStickID = 1;
 
         // data init
         requestData = new RequestData();

@@ -4,19 +4,19 @@ import frc.team555.Mayhem.Data.ControlData;
 import frc.team555.Mayhem.Data.RequestData;
 import org.montclairrobotics.cyborg.Cyborg;
 import org.montclairrobotics.cyborg.behaviors.CBBehavior;
-import org.montclairrobotics.cyborg.data.CBStdDriveRequestData;
+import org.montclairrobotics.cyborg.data.CBStdDriveControlData;
 
 public class OperatorBehavior  extends CBBehavior {
     private RequestData rd;
     private ControlData cd;
-    private CBStdDriveRequestData intake;
+    private CBStdDriveControlData intake;
 
     public OperatorBehavior(Cyborg robot) {
         super(robot);
 
         rd = (RequestData) Cyborg.requestData;
         cd = (ControlData) Cyborg.controlData;
-        intake = rd.intake;
+        intake = cd.intake;
     }
 
     @Override

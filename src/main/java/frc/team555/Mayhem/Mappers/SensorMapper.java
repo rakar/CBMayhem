@@ -16,18 +16,18 @@ import static org.montclairrobotics.cyborg.Cyborg.gameMode;
 
 public class SensorMapper extends CBCustomMapper {
 
-    RequestData rd;
+    private RequestData rd;
 
     //CBNavXYawSource navXYawSource;
 
-    CBEncoder mainLiftEncoder;
-    CBDigitalInput mainLiftLimit;
-    CBEncoder intakeLiftEncoder;
-    CBEncoder drivetrainLeftEncoder;
-    CBEncoder drivetrainRightEncoder;
-    CBDashboardChooser<Integer> fieldPosition;
-    CBDashboardChooser<String> autoSelection;
-    CBNavX navx;
+    private CBEncoder mainLiftEncoder;
+    private CBDigitalInput mainLiftLimit;
+    private CBEncoder intakeLiftEncoder;
+    private CBEncoder drivetrainLeftEncoder;
+    private CBEncoder drivetrainRightEncoder;
+    private CBDashboardChooser<Integer> fieldPosition;
+    private CBDashboardChooser<String> autoSelection;
+    private CBNavX navx;
 
     @SuppressWarnings("unchecked")
     public SensorMapper(Cyborg robot) {

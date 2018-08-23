@@ -9,7 +9,7 @@ import org.montclairrobotics.cyborg.mappers.CBTeleOpMapper;
 
 public class OperatorMapper extends CBTeleOpMapper {
 
-    RequestData requestData = (RequestData) Cyborg.requestData;
+    private RequestData requestData = (RequestData) Cyborg.requestData;
 
     private CBButton shootCubeButton;
     private CBButton intakeLiftUpButton;

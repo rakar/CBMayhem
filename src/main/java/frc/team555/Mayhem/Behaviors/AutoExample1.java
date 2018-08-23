@@ -10,23 +10,23 @@ import org.montclairrobotics.cyborg.utils.CBStateMachine;
 import org.montclairrobotics.cyborg.utils.CBTarget1D;
 
 public class AutoExample1 extends CBAutonomous {
-    RequestData rd;
-    double drivetrainAverageEncoderValueAtTransition;
-    final static int mainDriveDist = 1000; // this is a bad value!
-    final static int littleDriveDist = 500; // this is a bad value!
-    final static int mainLiftDist = 1000; // this is a bad value!
-    CBTarget1D leftTarget = new CBTarget1D().setTarget(90,4);
-    CBTarget1D rightTarget = new CBTarget1D().setTarget(-90,4);
-    CBStdDriveRequestData drd = (CBStdDriveRequestData)rd.driveData;
-    CBStdDriveRequestData intake = (CBStdDriveRequestData)rd.intake;
-    AutoStateMachine stateMachine = new AutoStateMachine();
+    private RequestData rd;
+    private double drivetrainAverageEncoderValueAtTransition;
+    private final static int mainDriveDist = 1000; // this is a bad value!
+    private final static int littleDriveDist = 500; // this is a bad value!
+    private final static int mainLiftDist = 1000; // this is a bad value!
+    private CBTarget1D leftTarget = new CBTarget1D().setTarget(90,4);
+    private CBTarget1D rightTarget = new CBTarget1D().setTarget(-90,4);
+    private CBStdDriveRequestData drd = (CBStdDriveRequestData)rd.driveData;
+    private CBStdDriveRequestData intake = (CBStdDriveRequestData)rd.intake;
+    private AutoStateMachine stateMachine = new AutoStateMachine();
 
-    enum AutoStates {Start, DriveAndLift, TurnLeft, TurnRight, DriveALittle, Eject, Done};
+    enum AutoStates {Start, DriveAndLift, TurnLeft, TurnRight, DriveALittle, Eject, Done}
 
     private class AutoStateMachine extends CBStateMachine<AutoStates> {
         int cycleCheck = 0;
 
-        public AutoStateMachine() {
+        AutoStateMachine() {
             super(AutoStates.Start);
             setLoopMode(CBStateMachineLoopMode.Looping);
         }

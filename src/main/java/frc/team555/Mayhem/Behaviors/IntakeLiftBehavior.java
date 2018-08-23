@@ -7,8 +7,8 @@ import org.montclairrobotics.cyborg.behaviors.CBBehavior;
 
 
 public class IntakeLiftBehavior extends CBBehavior {
-    RequestData rd;
-    ControlData cd;
+    private RequestData rd;
+    private ControlData cd;
 
     public IntakeLiftBehavior(Cyborg robot) {
         super(robot);
