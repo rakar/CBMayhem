@@ -21,7 +21,7 @@ public class AutoExample1 extends CBAutonomous {
     private CBStdDriveRequestData intake = (CBStdDriveRequestData)rd.intake;
     private AutoStateMachine stateMachine = new AutoStateMachine();
 
-    enum AutoStates {Start, DriveAndLift, TurnLeft, TurnRight, DriveALittle, Eject, Done}
+    enum AutoStates {Start, ValidateLift, DriveAndLift, TurnLeft, TurnRight, DriveALittle, Eject, Done}
 
     private class AutoStateMachine extends CBStateMachine<AutoStates> {
         int cycleCheck = 0;
@@ -40,9 +40,14 @@ public class AutoExample1 extends CBAutonomous {
             switch (currentState) {
                 case Start:
                     if((rd.fieldPosition==1 && rd.nearSwitchSide=='L') || (rd.fieldPosition==3 && rd.nearSwitchSide=='R')) {
-                        nextState = AutoStates.DriveAndLift;
+                        nextState = AutoStates.ValidateLift;
                     } else {
                         nextState = AutoStates.Done;
+                    }
+                    break;
+                case ValidateLift:
+                    if(rd.mainLiftLimitValue) {
+                        nextState = AutoStates.DriveAndLift;
                     }
                     break;
                 case DriveAndLift:
@@ -100,11 +105,16 @@ public class AutoExample1 extends CBAutonomous {
                 case Start:
                     drd.active = true;
                     drd.direction = new CB2DVector(0,0);
-
                     intake.active=true;
                     intake.direction.setXY(0,-.20); // bad value - Draw cube in?
                     intake.rotation = 0;
-
+                    break;
+                case ValidateLift:
+                    rd.mainLiftUp = false;
+                    rd.mainLIftDown = true;
+                    intake.active=true;
+                    intake.direction.setXY(0,-.20); // bad value - Draw cube in?
+                    intake.rotation = 0;
                     break;
                 case DriveAndLift:
                     if((rd.drivetrainAverageEncoderValue-drivetrainAverageEncoderValueAtTransition)>mainDriveDist) {

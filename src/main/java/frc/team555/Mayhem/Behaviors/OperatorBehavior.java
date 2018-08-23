@@ -7,16 +7,13 @@ import org.montclairrobotics.cyborg.behaviors.CBBehavior;
 import org.montclairrobotics.cyborg.data.CBStdDriveControlData;
 
 public class OperatorBehavior  extends CBBehavior {
-    private RequestData rd;
-    private ControlData cd;
-    private CBStdDriveControlData intake;
+
+    private RequestData rd = (RequestData) Cyborg.requestData;
+    private ControlData cd = (ControlData) Cyborg.controlData;
+    private CBStdDriveControlData intake = cd.intake;
 
     public OperatorBehavior(Cyborg robot) {
         super(robot);
-
-        rd = (RequestData) Cyborg.requestData;
-        cd = (ControlData) Cyborg.controlData;
-        intake = cd.intake;
     }
 
     @Override
@@ -35,5 +32,4 @@ public class OperatorBehavior  extends CBBehavior {
             }
         }
     }
-
 }

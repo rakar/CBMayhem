@@ -19,8 +19,6 @@ public class SensorMapper extends CBCustomMapper {
 
     private RequestData rd;
 
-    //CBNavXYawSource navXYawSource;
-
     CBHardwareAdapter ha = Cyborg.hardwareAdapter;
     private CBEncoder mainLiftEncoder= ha.getEncoder(RobotCB.mainLiftEncoder);
     private CBDigitalInput mainLiftLimit = ha.getDigitalInput(RobotCB.mainLiftLimit);
@@ -33,25 +31,19 @@ public class SensorMapper extends CBCustomMapper {
     private CBDashboardChooser<String> autoSelection = (CBDashboardChooser<String>)ha.getDevice(RobotCB.autoSelection);
     private CBNavX navx = ha.getNavX(RobotCB.navx);
 
-
     public SensorMapper(Cyborg robot) {
         super(robot);
         this.robot = robot;
         rd = (RequestData)Cyborg.requestData;
-
     }
 
     @Override
     public void update() {
-        //stdDriveRequestData.gyroLockValue = navXYawSource.get();
-
         rd.mainLiftEncoderValue = mainLiftEncoder.getDistance();
         rd.mainLiftLimitValue = mainLiftLimit.get();
-
         rd.drivetrainLeftEncoderValue = drivetrainLeftEncoder.getDistance();
         rd.drivetrainRightEncoderValue = drivetrainRightEncoder.getDistance();
         rd.drivetrainAverageEncoderValue = (rd.drivetrainLeftEncoderValue+rd.drivetrainRightEncoderValue)/2.0;
-
         rd.robotAngle = navx.getYaw();
 
         // FMS Data, Driver Station (Just to make things interesting lets try this pre-game only)

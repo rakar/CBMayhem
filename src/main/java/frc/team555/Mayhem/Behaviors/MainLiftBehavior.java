@@ -7,14 +7,11 @@ import org.montclairrobotics.cyborg.behaviors.CBBehavior;
 
 
 public class MainLiftBehavior extends CBBehavior {
-    private RequestData rd;
-    private ControlData cd;
+    private RequestData rd = (RequestData)Cyborg.requestData;
+    private ControlData cd = (ControlData)Cyborg.controlData;
 
     public MainLiftBehavior(Cyborg robot) {
         super(robot);
-
-        rd = (RequestData)Cyborg.requestData;
-        cd = (ControlData)Cyborg.controlData;
 
         // These are essentially static configurations of the lift
         // they can be set once and are generally never changed
