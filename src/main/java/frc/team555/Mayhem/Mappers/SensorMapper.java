@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.team555.Mayhem.Data.RequestData;
 import frc.team555.Mayhem.RobotCB;
 import org.montclairrobotics.cyborg.CBGameMode;
+import org.montclairrobotics.cyborg.CBHardwareAdapter;
 import org.montclairrobotics.cyborg.Cyborg;
 import org.montclairrobotics.cyborg.devices.CBDashboardChooser;
 import org.montclairrobotics.cyborg.devices.CBDigitalInput;
@@ -20,29 +21,24 @@ public class SensorMapper extends CBCustomMapper {
 
     //CBNavXYawSource navXYawSource;
 
-    private CBEncoder mainLiftEncoder;
-    private CBDigitalInput mainLiftLimit;
-    private CBEncoder intakeLiftEncoder;
-    private CBEncoder drivetrainLeftEncoder;
-    private CBEncoder drivetrainRightEncoder;
-    private CBDashboardChooser<Integer> fieldPosition;
-    private CBDashboardChooser<String> autoSelection;
-    private CBNavX navx;
-
+    CBHardwareAdapter ha = Cyborg.hardwareAdapter;
+    private CBEncoder mainLiftEncoder= ha.getEncoder(RobotCB.mainLiftEncoder);
+    private CBDigitalInput mainLiftLimit = ha.getDigitalInput(RobotCB.mainLiftLimit);
+    private CBEncoder intakeLiftEncoder = ha.getEncoder(RobotCB.intakeLiftEncoder);
+    private CBEncoder drivetrainLeftEncoder = ha.getEncoder(RobotCB.dtLeftEncoder);
+    private CBEncoder drivetrainRightEncoder = ha.getEncoder(RobotCB.dtRightEncoder);
     @SuppressWarnings("unchecked")
+    private CBDashboardChooser<Integer> fieldPosition = (CBDashboardChooser<Integer>)ha.getDevice(RobotCB.fieldPosition);
+    @SuppressWarnings("unchecked")
+    private CBDashboardChooser<String> autoSelection = (CBDashboardChooser<String>)ha.getDevice(RobotCB.autoSelection);
+    private CBNavX navx = ha.getNavX(RobotCB.navx);
+
+
     public SensorMapper(Cyborg robot) {
         super(robot);
         this.robot = robot;
         rd = (RequestData)Cyborg.requestData;
 
-        mainLiftEncoder = Cyborg.hardwareAdapter.getEncoder(RobotCB.mainLiftEncoder);
-        mainLiftLimit = Cyborg.hardwareAdapter.getDigitalInput(RobotCB.mainLiftLimit);
-        intakeLiftEncoder = Cyborg.hardwareAdapter.getEncoder(RobotCB.intakeLiftEncoder);
-        drivetrainLeftEncoder = Cyborg.hardwareAdapter.getEncoder(RobotCB.dtLeftEncoder);
-        drivetrainRightEncoder = Cyborg.hardwareAdapter.getEncoder(RobotCB.dtRightEncoder);
-        fieldPosition = (CBDashboardChooser<Integer>)Cyborg.hardwareAdapter.getDevice(RobotCB.fieldPosition);
-        autoSelection = (CBDashboardChooser<String>)Cyborg.hardwareAdapter.getDevice(RobotCB.autoSelection);
-        navx = Cyborg.hardwareAdapter.getNavX(RobotCB.navx);
     }
 
     @Override

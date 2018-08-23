@@ -3,15 +3,14 @@ package frc.team555.Mayhem;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.SPI;
-
 import frc.team555.Mayhem.Behaviors.AutoExample1;
 import frc.team555.Mayhem.Behaviors.IntakeLiftBehavior;
 import frc.team555.Mayhem.Behaviors.MainLiftBehavior;
+import frc.team555.Mayhem.Behaviors.OperatorBehavior;
 import frc.team555.Mayhem.Data.ControlData;
 import frc.team555.Mayhem.Data.RequestData;
 import frc.team555.Mayhem.Mappers.OperatorMapper;
 import frc.team555.Mayhem.Mappers.SensorMapper;
-
 import org.montclairrobotics.cyborg.CBHardwareAdapter;
 import org.montclairrobotics.cyborg.Cyborg;
 import org.montclairrobotics.cyborg.assemblies.CBDriveModule;
@@ -32,6 +31,8 @@ public class RobotCB extends Cyborg {
 
     // constants
     // joystick ports
+    private final int driveStickID = 0;
+    private final int operatorStickID = 1;
 
     //
     // This has been changed to "public static" from "private" to allow
@@ -41,8 +42,8 @@ public class RobotCB extends Cyborg {
     // attach to devices.
     //
     public static CBDeviceID
-            // power dist board
-            pdb,
+    // power dist board
+    pdb,
 
     // driver controls
     driveXAxis, driveYAxis, gyroLockButton,
@@ -75,11 +76,15 @@ public class RobotCB extends Cyborg {
     fieldPosition, autoSelection
     ;
 
+    // this was made class level to allow for access
+    // from methods. hardwareAdapter is the main class
+    // object, so this will likely be put back in
+    // defineDevices, but may be a helpful shortcut
+    // ???
+    public CBHardwareAdapter ha;
+
     @Override
     public void cyborgInit() {
-
-        final int driveStickID = 0;
-        final int operatorStickID = 1;
 
         // data init
         requestData = new RequestData();
@@ -88,9 +93,43 @@ public class RobotCB extends Cyborg {
         controlData.driveData = new CBStdDriveControlData();
 
         // Configure Hardware Adapter and Devices
-        CBHardwareAdapter ha = new CBHardwareAdapter(this);
+        ha = new CBHardwareAdapter(this);
         hardwareAdapter = ha;
 
+        defineDevices();
+        defineMappers();
+        defineControllers();
+        defineBehaviors();
+    }
+
+    @Override
+    public void cyborgDisabledInit() {
+
+    }
+
+    @Override
+    public void cyborgAutonomousInit() {
+        switch(((RequestData)requestData).autoSelection) {
+            case "auto1":
+                this.addAutonomous(new AutoExample1(this));
+                break;
+            default:
+                // just say no
+                break;
+        }
+    }
+
+    @Override
+    public void cyborgTeleopInit() {
+
+    }
+
+    @Override
+    public void cyborgTestInit() {
+
+    }
+
+    private void defineDevices() {
         pdb = ha.add(
                 new CBPDB()
         );
@@ -264,7 +303,9 @@ public class RobotCB extends Cyborg {
                         .addChoice("Auto1", "auto1")
 
         );
+    }
 
+    private void defineMappers() {
         // setup teleop mappers
         this.addTeleOpMapper(
                 new CBArcadeDriveMapper(this)
@@ -310,7 +351,9 @@ public class RobotCB extends Cyborg {
                         .add(intakeLeftMotor)
                         .add(intakeRightMotor)
         );
+    }
 
+    private void defineControllers() {
         // setup robot controllers
         this.addRobotController(
                 new CBDifferentialDriveController(this)
@@ -388,8 +431,8 @@ public class RobotCB extends Cyborg {
                         // attach a speed controller array to drive the lift
                         .setSpeedControllerArray(
                                 new CBVictorArrayController()
-                                    .addSpeedController(mainLiftMotorFront)
-                                    .setDriveMode(CBEnums.CBDriveMode.Power)
+                                        .addSpeedController(mainLiftMotorFront)
+                                        .setDriveMode(CBEnums.CBDriveMode.Power)
                         )
         );
 
@@ -412,12 +455,13 @@ public class RobotCB extends Cyborg {
                         // attach a speed controller array to drive the lift
                         .setSpeedControllerArray(
                                 new CBVictorArrayController()
-                                    .addSpeedController(intakeLiftMotor)
-                                    .setDriveMode(CBEnums.CBDriveMode.Power)
+                                        .addSpeedController(intakeLiftMotor)
+                                        .setDriveMode(CBEnums.CBDriveMode.Power)
                         )
         );
+    }
 
-
+    private void defineBehaviors() {
         // setup behaviors
         this.addBehavior(new CBStdDriveBehavior(this));
         this.addBehavior(new MainLiftBehavior(this));
@@ -430,39 +474,6 @@ public class RobotCB extends Cyborg {
                         .setControlData(((ControlData) controlData).intake)
         );
 
+        this.addBehavior(new OperatorBehavior(this));
     }
-
-    @Override
-    public void cyborgDisabledInit() {
-
-    }
-
-    @Override
-    public void cyborgAutonomousInit() {
-        switch(((RequestData)requestData).autoSelection) {
-            case "auto1":
-                this.addAutonomous(new AutoExample1(this));
-                break;
-            default:
-                // just say no
-                break;
-        }
-    }
-
-    @Override
-    public void cyborgTeleopInit() {
-
-    }
-
-    @Override
-    public void cyborgTestInit() {
-
-    }
-
-    /*
-    @Override
-    public void cyborgTestPeriodic() {
-
-    }
-    */
 }
