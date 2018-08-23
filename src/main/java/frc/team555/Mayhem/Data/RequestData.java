@@ -15,6 +15,17 @@ public class RequestData extends CBRequestData {
     // sensors
     public double mainLiftEncoderValue;
     public boolean mainLiftLimitValue;
+    public double drivetrainLeftEncoderValue;
+    public double drivetrainRightEncoderValue;
+    public double drivetrainAverageEncoderValue;
+    public double robotAngle;
+
+    // FMS Data
+    public String gameSpecificMessage;
+    public int fieldPosition;
+    public String autoSelection;
+    public char nearSwitchSide;
+
 
     // crazy second drivetrain for intake
     public CBStdDriveRequestData intake = new CBStdDriveRequestData();

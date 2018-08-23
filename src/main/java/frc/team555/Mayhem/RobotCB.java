@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.SPI;
 
+import frc.team555.Mayhem.Behaviors.AutoExample1;
 import frc.team555.Mayhem.Behaviors.IntakeLiftBehavior;
 import frc.team555.Mayhem.Behaviors.MainLiftBehavior;
 import frc.team555.Mayhem.Data.ControlData;
@@ -34,7 +35,14 @@ public class RobotCB extends Cyborg {
     private final int driveStickID = 0;
     private final int operatorStickID = 1;
 
-    private CBDeviceID
+    //
+    // This has been changed to "public static" from "private" to allow
+    // for direct access in cases of NON-reusable mappers/behaviors
+    // to avoid lengthy init code, that will allways be robot specific
+    // anyway. Reusable code, should of course use setter functions to
+    // attach to devices.
+    //
+    public static CBDeviceID
             // power dist board
             pdb,
 
@@ -63,8 +71,11 @@ public class RobotCB extends Cyborg {
     mainLiftLimit,
 
     // intake motors
-    intakeLeftMotor, intakeRightMotor;
+    intakeLeftMotor, intakeRightMotor,
 
+    // dashboard choosers
+    fieldPosition, autoSelection
+    ;
 
     @Override
     public void cyborgInit() {
@@ -74,7 +85,6 @@ public class RobotCB extends Cyborg {
         controlData = new ControlData();
         requestData.driveData = new CBStdDriveRequestData();
         controlData.driveData = new CBStdDriveControlData();
-
 
         // Configure Hardware Adapter and Devices
         CBHardwareAdapter ha = new CBHardwareAdapter(this);
@@ -240,6 +250,20 @@ public class RobotCB extends Cyborg {
                 new CBButton(operatorStickID, 5)
         );
 
+        // dashboard elements
+        fieldPosition = ha.add(
+                new CBDashboardChooser<Integer>("Field Position")
+                        .addChoice("left",1)
+                        .addChoice("center", 2)
+                        .addChoice("right",3)
+        );
+        autoSelection = ha.add(
+                new CBDashboardChooser<String>("Autonomous")
+                        .addDefault("NONE!!!", "none")
+                        .addChoice("Auto1", "auto1")
+
+        );
+
         // setup teleop mappers
         this.addTeleOpMapper(
                 new CBArcadeDriveMapper(this)
@@ -271,7 +295,6 @@ public class RobotCB extends Cyborg {
         // setup sensor mapper(s)
         this.addCustomMapper(
                 new SensorMapper(this)
-                        .setMainLiftLimits(mainLiftEncoder, mainLiftLimit, intakeLiftEncoder)
         );
 
         this.addCustomMapper(
@@ -415,7 +438,14 @@ public class RobotCB extends Cyborg {
 
     @Override
     public void cyborgAutonomousInit() {
-
+        switch(((RequestData)requestData).autoSelection) {
+            case "auto1":
+                this.addAutonomous(new AutoExample1(this));
+                break;
+            default:
+                // just say no
+                break;
+        }
     }
 
     @Override
