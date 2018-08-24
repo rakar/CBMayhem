@@ -11,7 +11,6 @@ import frc.team555.Mayhem.Data.ControlData;
 import frc.team555.Mayhem.Data.RequestData;
 import frc.team555.Mayhem.Mappers.OperatorMapper;
 import frc.team555.Mayhem.Mappers.SensorMapper;
-import org.montclairrobotics.cyborg.CBHardwareAdapter;
 import org.montclairrobotics.cyborg.Cyborg;
 import org.montclairrobotics.cyborg.assemblies.CBDriveModule;
 import org.montclairrobotics.cyborg.assemblies.CBVictorArrayController;
@@ -82,7 +81,6 @@ public class RobotCB extends Cyborg {
 
     public RobotCB() {
     }
-
 
     @Override
     public void cyborgInit() {

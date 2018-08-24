@@ -5,12 +5,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.team555.Mayhem.Data.RequestData;
 import frc.team555.Mayhem.RobotCB;
 import org.montclairrobotics.cyborg.CBGameMode;
-import org.montclairrobotics.cyborg.CBHardwareAdapter;
 import org.montclairrobotics.cyborg.Cyborg;
-import org.montclairrobotics.cyborg.devices.CBDashboardChooser;
-import org.montclairrobotics.cyborg.devices.CBDigitalInput;
-import org.montclairrobotics.cyborg.devices.CBEncoder;
-import org.montclairrobotics.cyborg.devices.CBNavX;
+import org.montclairrobotics.cyborg.devices.*;
 import org.montclairrobotics.cyborg.mappers.CBSensorMapper;
 
 import static org.montclairrobotics.cyborg.Cyborg.gameMode;
