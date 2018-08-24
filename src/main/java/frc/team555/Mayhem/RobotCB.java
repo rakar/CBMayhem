@@ -39,7 +39,8 @@ public class RobotCB extends Cyborg {
     // object, so this will likely be put back in
     // defineDevices, but may be a helpful shortcut
     // ???
-    CBHardwareAdapter ha;
+    // oh just bite the bullet and do the right thing.
+    //CBHardwareAdapter ha;
 
     //
     // This has been changed to "public static" from "private" to allow
@@ -128,18 +129,18 @@ public class RobotCB extends Cyborg {
     private void defineDevices() {
         // Configure Hardware Adapter and Devices
         hardwareAdapter = new CBHardwareAdapter(this);
-        ha = hardwareAdapter;
+        //ha = hardwareAdapter;
 
-        pdb = ha.add(
+        pdb = hardwareAdapter.add(
                 new CBPDB()
         );
 
-        navx = ha.add(
+        navx = hardwareAdapter.add(
                 new CBNavX(SPI.Port.kMXP)
         );
 
         // setup drivetrain
-        dtFrontLeftMotor = ha.add(
+        dtFrontLeftMotor = hardwareAdapter.add(
                 new CBTalonSRX(1)
                         .setDeviceName("DriveTrain", "FrontLeft")
                         .setPowerSource(pdb, 0)
@@ -148,7 +149,7 @@ public class RobotCB extends Cyborg {
                                         .setBasic(.1, 1, 30)
                         )
         );
-        dtFrontRightMotor = ha.add(
+        dtFrontRightMotor = hardwareAdapter.add(
                 new CBTalonSRX(7)
                         .setDeviceName("DriveTrain", "FrontRight")
                         .setPowerSource(pdb, 1)
@@ -157,7 +158,7 @@ public class RobotCB extends Cyborg {
                                         .setBasic(.1, 1, 30)
                         )
         );
-        dtBackLeftMotor = ha.add(
+        dtBackLeftMotor = hardwareAdapter.add(
                 new CBTalonSRX(3)
                         .setDeviceName("DriveTrain", "BackLeft")
                         .setPowerSource(pdb, 2)
@@ -166,7 +167,7 @@ public class RobotCB extends Cyborg {
                                         .setBasic(.1, 1, 30)
                         )
         );
-        dtBackRightMotor = ha.add(
+        dtBackRightMotor = hardwareAdapter.add(
                 new CBTalonSRX(8)
                         .setDeviceName("DriveTrain", "BackRight")
                         .setPowerSource(pdb, 3)
@@ -176,16 +177,16 @@ public class RobotCB extends Cyborg {
                         )
         );
         final double inchesPerTick = 96 / 4499;
-        dtLeftEncoder = ha.add(
+        dtLeftEncoder = hardwareAdapter.add(
                 new CBEncoder(1, 0, CounterBase.EncodingType.k4X, false, inchesPerTick)
         );
-        dtRightEncoder = ha.add(
+        dtRightEncoder = hardwareAdapter.add(
                 new CBEncoder(3, 2, CounterBase.EncodingType.k4X, false, inchesPerTick)
         );
 
 
         // setup main lift
-        mainLiftMotorFront = ha.add(
+        mainLiftMotorFront = hardwareAdapter.add(
                 new CBTalonSRX(4)
                         .setDeviceName("MainLift", "Front")
                         .setPowerSource(pdb, 4)
@@ -194,7 +195,7 @@ public class RobotCB extends Cyborg {
                                         .setBasic(.1, 1, 20)
                         )
         );
-        mainLiftMotorBack = ha.add(
+        mainLiftMotorBack = hardwareAdapter.add(
                 new CBTalonSRX(2)
                         .setDeviceName("MainLift", "Back")
                         .setPowerSource(pdb, 5)
@@ -203,16 +204,16 @@ public class RobotCB extends Cyborg {
                                         .setBasic(.1, 1, 20)
                         )
         );
-        mainLiftEncoder = ha.add(
+        mainLiftEncoder = hardwareAdapter.add(
                 new CBEncoder(4, 5, CounterBase.EncodingType.k4X, false, 1)
         );
-        mainLiftLimit = ha.add(
+        mainLiftLimit = hardwareAdapter.add(
                 new CBDigitalInput(9)
         );
 
 
         // setup intake lift
-        intakeLiftMotor = ha.add(
+        intakeLiftMotor = hardwareAdapter.add(
                 new CBTalonSRX(9)
                         .setDeviceName("Intake", "LiftMotor")
                         .setPowerSource(pdb, 6)
@@ -221,13 +222,13 @@ public class RobotCB extends Cyborg {
                                         .setBasic(.1, 1, 20)
                         )
         );
-        intakeLiftEncoder = ha.add(
+        intakeLiftEncoder = hardwareAdapter.add(
                 new CBEncoder(intakeLiftMotor, FeedbackDevice.QuadEncoder, false, 1)
         );
 
 
         // setup intake motors
-        intakeLeftMotor = ha.add(
+        intakeLeftMotor = hardwareAdapter.add(
                 new CBTalonSRX(10)
                         .setDeviceName( "Intake", "LeftMotor")
                         .setPowerSource(pdb, 8)
@@ -236,7 +237,7 @@ public class RobotCB extends Cyborg {
                                         .setBasic(.1, 1, 30)
                         )
         );
-        intakeRightMotor = ha.add(
+        intakeRightMotor = hardwareAdapter.add(
                 new CBTalonSRX(5)
                         .setDeviceName("Intake", "RightMotor")
                         .setPowerSource(pdb, 9)
@@ -247,12 +248,12 @@ public class RobotCB extends Cyborg {
         );
 
         // driver controls
-        driveXAxis = ha.add(
+        driveXAxis = hardwareAdapter.add(
                 new CBAxis(driveStickID, 1)
                         .setDeadzone(0.1)
                         .setScale(-1.0)
         );
-        driveYAxis = ha.add(
+        driveYAxis = hardwareAdapter.add(
                 new CBAxis(driveStickID, 0)
                         .setDeadzone(0.1)
                         .setScale(-1.0)
@@ -274,30 +275,30 @@ public class RobotCB extends Cyborg {
                         .setScale(-1.0)
         );
 
-        shootCubeButton = ha.add(
+        shootCubeButton = hardwareAdapter.add(
                 new CBButton(operatorStickID, 1)
         );
-        intakeLiftUpButton = ha.add(
+        intakeLiftUpButton = hardwareAdapter.add(
                 new CBButton(operatorStickID, 3)
         );
-        intakeLiftDownButton = ha.add(
+        intakeLiftDownButton = hardwareAdapter.add(
                 new CBButton(operatorStickID, 2)
         );
-        mainLiftUpButton = ha.add(
+        mainLiftUpButton = hardwareAdapter.add(
                 new CBButton(operatorStickID, 4)
         );
-        mainLiftDownButton = ha.add(
+        mainLiftDownButton = hardwareAdapter.add(
                 new CBButton(operatorStickID, 5)
         );
 
         // dashboard elements
-        fieldPosition = ha.add(
+        fieldPosition = hardwareAdapter.add(
                 new CBDashboardChooser<Integer>("Field Position")
                         .addChoice("left",1)
                         .addChoice("center", 2)
                         .addChoice("right",3)
         );
-        autoSelection = ha.add(
+        autoSelection = hardwareAdapter.add(
                 new CBDashboardChooser<String>("Autonomous")
                         .addDefault("NONE!!!", "none")
                         .addChoice("Auto1", "auto1")
