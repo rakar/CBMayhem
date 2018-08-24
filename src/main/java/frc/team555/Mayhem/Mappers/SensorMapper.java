@@ -11,11 +11,11 @@ import org.montclairrobotics.cyborg.devices.CBDashboardChooser;
 import org.montclairrobotics.cyborg.devices.CBDigitalInput;
 import org.montclairrobotics.cyborg.devices.CBEncoder;
 import org.montclairrobotics.cyborg.devices.CBNavX;
-import org.montclairrobotics.cyborg.mappers.CBCustomMapper;
+import org.montclairrobotics.cyborg.mappers.CBSensorMapper;
 
 import static org.montclairrobotics.cyborg.Cyborg.gameMode;
 
-public class SensorMapper extends CBCustomMapper {
+public class SensorMapper extends CBSensorMapper {
 
     private RequestData rd;
 

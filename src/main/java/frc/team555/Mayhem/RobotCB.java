@@ -34,16 +34,22 @@ public class RobotCB extends Cyborg {
     private final int driveStickID = 0;
     private final int operatorStickID = 1;
 
+    // this was made class level to allow for access
+    // from methods. hardwareAdapter is the main class
+    // object, so this will likely be put back in
+    // defineDevices, but may be a helpful shortcut
+    // ???
+    CBHardwareAdapter ha;
+
     //
     // This has been changed to "public static" from "private" to allow
     // for direct access in cases of NON-reusable mappers/behaviors
-    // to avoid lengthy init code, that will allways be robot specific
+    // to avoid lengthy init code, that will always be robot specific
     // anyway. Reusable code, should of course use setter functions to
     // attach to devices.
     //
     public static CBDeviceID
-    // power dist board
-    pdb,
+    pdb, navx,
 
     // driver controls
     driveXAxis, driveYAxis, gyroLockButton,
@@ -51,10 +57,7 @@ public class RobotCB extends Cyborg {
     // operator controls
     operXAxis, operYAxis, shootCubeButton, intakeLiftUpButton, intakeLiftDownButton, mainLiftUpButton, mainLiftDownButton,
 
-    //navx
-    navx,
-
-    // dt Motors
+    // drivetrain Motors
     dtFrontLeftMotor, dtFrontRightMotor, dtBackLeftMotor, dtBackRightMotor,
 
     // dt Encoders
@@ -76,12 +79,9 @@ public class RobotCB extends Cyborg {
     fieldPosition, autoSelection
     ;
 
-    // this was made class level to allow for access
-    // from methods. hardwareAdapter is the main class
-    // object, so this will likely be put back in
-    // defineDevices, but may be a helpful shortcut
-    // ???
-    public CBHardwareAdapter ha;
+    public RobotCB() {
+    }
+
 
     @Override
     public void cyborgInit() {
@@ -91,10 +91,6 @@ public class RobotCB extends Cyborg {
         controlData = new ControlData();
         requestData.driveData = new CBStdDriveRequestData();
         controlData.driveData = new CBStdDriveControlData();
-
-        // Configure Hardware Adapter and Devices
-        ha = new CBHardwareAdapter(this);
-        hardwareAdapter = ha;
 
         defineDevices();
         defineMappers();
@@ -130,6 +126,10 @@ public class RobotCB extends Cyborg {
     }
 
     private void defineDevices() {
+        // Configure Hardware Adapter and Devices
+        hardwareAdapter = new CBHardwareAdapter(this);
+        ha = hardwareAdapter;
+
         pdb = ha.add(
                 new CBPDB()
         );
@@ -335,11 +335,11 @@ public class RobotCB extends Cyborg {
         );
 
         // setup sensor mapper(s)
-        this.addCustomMapper(
+        this.addSensorMapper(
                 new SensorMapper(this)
         );
 
-        this.addCustomMapper(
+        this.addSensorMapper(
                 new CBMotorMonitorMapper(this)
                         .add(dtFrontLeftMotor)
                         .add(dtFrontRightMotor)
