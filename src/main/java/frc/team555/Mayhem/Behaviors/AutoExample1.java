@@ -1,6 +1,5 @@
 package frc.team555.Mayhem.Behaviors;
 
-
 import frc.team555.Mayhem.Data.RequestData;
 import org.montclairrobotics.cyborg.Cyborg;
 import org.montclairrobotics.cyborg.behaviors.CBAutonomous;
@@ -39,15 +38,16 @@ public class AutoExample1 extends CBAutonomous {
 
             switch (currentState) {
                 case Start:
-                    if((rd.fieldPosition==1 && rd.nearSwitchSide=='L') || (rd.fieldPosition==3 && rd.nearSwitchSide=='R')) {
-                        nextState = AutoStates.ValidateLift;
-                    } else {
-                        nextState = AutoStates.Done;
-                    }
+                    nextState = AutoStates.ValidateLift;
                     break;
                 case ValidateLift:
                     if(rd.mainLiftLimitValue) {
-                        nextState = AutoStates.DriveAndLift;
+                        if((rd.fieldPosition==1 && rd.nearSwitchSide=='L') || (rd.fieldPosition==3 && rd.nearSwitchSide=='R')) {
+                            nextState = AutoStates.DriveAndLift;
+
+                        } else {
+                            nextState = AutoStates.Done;
+                        }
                     }
                     break;
                 case DriveAndLift:
@@ -101,7 +101,6 @@ public class AutoExample1 extends CBAutonomous {
         protected void doCurrentState() {
             //SmartDashboard.putString("do Current State:", currentState.name());
             switch (currentState) {
-
                 case Start:
                     drd.active = true;
                     drd.direction = new CB2DVector(0,0);
@@ -169,7 +168,6 @@ public class AutoExample1 extends CBAutonomous {
             }
         }
     }
-
 
     public AutoExample1(Cyborg robot) {
         super(robot);
