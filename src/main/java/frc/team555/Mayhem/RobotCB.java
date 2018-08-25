@@ -346,9 +346,7 @@ public class RobotCB extends Cyborg {
                         .add(dtBackRightMotor)
                         .add(mainLiftMotorBack)
                         .add(mainLiftMotorFront)
-                        .add(intakeLiftEncoder)
-                        .add(intakeLeftMotor)
-                        .add(intakeRightMotor)
+                        .add(intakeLiftMotor)
         );
     }
 
