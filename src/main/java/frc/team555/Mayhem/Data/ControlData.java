@@ -1,7 +1,7 @@
 package frc.team555.Mayhem.Data;
 
 import org.montclairrobotics.cyborg.data.CBControlData;
-import org.montclairrobotics.cyborg.data.CBLiftControllerData;
+import org.montclairrobotics.cyborg.data.CBLiftControlData;
 import org.montclairrobotics.cyborg.data.CBStdDriveControlData;
 
 public class ControlData extends CBControlData {
@@ -10,8 +10,8 @@ public class ControlData extends CBControlData {
     //public CBTriState intakeLiftStatus;
     //public CBTriState mainLiftStatus;
 
-    public CBLiftControllerData mainLift = new CBLiftControllerData();
-    public CBLiftControllerData intakeLift = new CBLiftControllerData();
+    public CBLiftControlData mainLift = new CBLiftControlData();
+    public CBLiftControlData intakeLift = new CBLiftControlData();
 
     // intake, yeah intake
     public CBStdDriveControlData intake = new CBStdDriveControlData();
